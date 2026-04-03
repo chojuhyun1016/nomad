@@ -26,6 +26,10 @@ htmlcov/
 # Node
 node_modules/
 
+# Next.js
+.next/
+out/
+
 # Environment & Secrets
 .env
 .env.local

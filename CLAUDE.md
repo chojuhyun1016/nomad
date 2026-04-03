@@ -7,16 +7,38 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Korea Nomad** — 한국 디지털 노마드 전용 도시 가이드 플랫폼. Nomads.com의 검증된 UI 패턴에 한국 특화 데이터(카페 지수, KTX 접근성, 계절 추천, K-비자)를 결합한 홈페이지.
 
 - PRD: `korea-nomad-prd.md` 참조
-- 현재 상태: 초기 단계 (코드 미구현)
+
+## 개발 명령어
+
+```bash
+npm run dev      # 개발 서버 (Turbopack)
+npm run build    # 프로덕션 빌드
+npm run start    # 프로덕션 서버
+npm run lint     # ESLint
+```
 
 ## 기술 스택
 
-- **프론트엔드**: Next.js (App Router), Tailwind CSS
-- **백엔드**: REST API 또는 tRPC
-- **DB**: PostgreSQL
-- **인증**: NextAuth.js (Google, 카카오, Apple OAuth)
-- **외부 API**: 기상청 API (날씨), 에어코리아 API (AQI)
-- **다국어**: 한국어 + 영어 (MVP), 일본어/중국어 (v2)
+- **프론트엔드**: Next.js 16 (App Router), Tailwind CSS v4, shadcn/ui v4 (base-ui 기반)
+- **언어**: TypeScript
+- **폰트**: Noto Sans KR + Inter
+- **아이콘**: lucide-react
+
+## 아키텍처
+
+- `src/app/` — App Router 페이지 (layout.tsx, page.tsx)
+- `src/components/layout/` — Header, Footer, MobileNav
+- `src/components/sections/` — 홈페이지 10개 섹션 컴포넌트
+- `src/components/ui/` — shadcn/ui 컴포넌트 (자동 생성)
+- `src/data/` — Mock 데이터 (cities, media, seasonal, meetups, visa, nav)
+- `src/types/` — TypeScript 타입 정의
+- `src/lib/` — 유틸리티 (cn, constants, get-season)
+
+## Server/Client 컴포넌트
+
+- **기본: Server Component** — 대부분의 섹션은 Server Component
+- **Client Component** (5개만): mobile-nav, hero-signup-form, hero-video-modal, filter-bar, sticky-bottom-bar
+- shadcn/ui v4는 base-ui 기반이므로 `asChild` 대신 `render` prop 사용
 
 ## 반응형 브레이크포인트
 
