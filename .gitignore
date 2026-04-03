@@ -1,0 +1,45 @@
+# IDE
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# Claude Code
+.claude/
+
+# Logs
+*.log
+
+# Temp
+tmp/
+temp/
+*.tmp
