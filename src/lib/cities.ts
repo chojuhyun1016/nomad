@@ -1,5 +1,5 @@
 import { cities } from "@/data/cities";
-import { City } from "@/types";
+import type { City } from "@/types";
 
 export function toSlug(cityNameEn: string): string {
   return cityNameEn.toLowerCase();
