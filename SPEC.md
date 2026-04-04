@@ -203,7 +203,7 @@ custom hook 분리, 데이터 기반 렌더링, 의존성 주입을 적용하여
 
 ## Phase 7: 좋아요/싫어요 버튼 레이아웃 변경
 
-- [ ] Phase 7 완료
+- [x] Phase 7 완료
 
 ### 오버뷰
 
@@ -211,24 +211,24 @@ custom hook 분리, 데이터 기반 렌더링, 의존성 주입을 적용하여
 
 ### 수정/개선
 
-- [ ] **`src/components/sections/city-card.tsx`** — 좋아요/싫어요 영역 레이아웃 변경
-  - [ ] `flex items-center gap-4` → `flex items-center justify-between`
-  - [ ] 좋아요 버튼: `[ThumbsUp][숫자]` (왼쪽 정렬, 기존과 동일)
-  - [ ] 싫어요 버튼: `[숫자][ThumbsDown]` (오른쪽 정렬, 아이콘과 숫자 순서 반전)
+- [x] **`src/components/sections/city-card.tsx`** — 좋아요/싫어요 영역 레이아웃 변경
+  - [x] `flex items-center gap-4` → `flex items-center justify-between`
+  - [x] 좋아요 버튼: `[ThumbsUp][숫자]` (왼쪽 정렬, 기존과 동일)
+  - [x] 싫어요 버튼: `[숫자][ThumbsDown]` (오른쪽 정렬, 아이콘과 숫자 순서 반전)
 
 ### 검증/확인
 
-- [ ] `npm run build` 성공
-- [ ] `npm run lint` 통과
-- [ ] 좋아요 버튼이 왼쪽, 싫어요 버튼이 오른쪽에 정렬
-- [ ] 배치: `[👍][숫자]...[숫자][👎]`
-- [ ] 좋아요/싫어요 토글 동작 정상
+- [x] `npm run build` 성공
+- [x] `npm run lint` 통과
+- [x] 좋아요 버튼이 왼쪽, 싫어요 버튼이 오른쪽에 정렬
+- [x] 배치: `[👍][숫자]...[숫자][👎]`
+- [x] 좋아요/싫어요 토글 동작 정상
 
 ---
 
 ## Phase 8: 필터 버튼 최대 너비 균등 배치
 
-- [ ] Phase 8 완료
+- [x] Phase 8 완료
 
 ### 오버뷰
 
@@ -236,14 +236,14 @@ custom hook 분리, 데이터 기반 렌더링, 의존성 주입을 적용하여
 
 ### 수정/개선
 
-- [ ] **`src/components/sections/filter-bar.tsx`** — FilterGroup 레이아웃 변경
-  - [ ] 버튼 컨테이너: `flex flex-wrap gap-1.5` → `flex gap-1.5 flex-1`
-  - [ ] 각 버튼: `flex-1 text-center` 추가하여 균등 너비 배분
+- [x] **`src/components/sections/filter-bar.tsx`** — FilterGroup 레이아웃 변경
+  - [x] 버튼 컨테이너: `flex flex-wrap gap-1.5` → `flex gap-1.5 flex-1`
+  - [x] 각 버튼: `flex-1 text-center` 추가하여 균등 너비 배분
 
 ### 검증/확인
 
-- [ ] `npm run build` 성공
-- [ ] `npm run lint` 통과
-- [ ] 각 필터 행의 버튼들이 남은 공간을 균등하게 차지
-- [ ] 모바일/데스크톱 반응형 정상 표시
-- [ ] 필터 클릭 동작 정상
+- [x] `npm run build` 성공
+- [x] `npm run lint` 통과
+- [x] 각 필터 행의 버튼들이 남은 공간을 균등하게 차지
+- [x] 모바일/데스크톱 반응형 정상 표시
+- [x] 필터 클릭 동작 정상
