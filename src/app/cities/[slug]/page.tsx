@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getCityBySlug, getAllCitySlugs } from "@/lib/cities";
 import {
   ArrowLeft,
   Wifi,
@@ -12,7 +13,6 @@ import {
   MapPin,
   DollarSign,
 } from "lucide-react";
-import { getCityBySlug, getAllCitySlugs } from "@/lib/cities";
 import { Card } from "@/components/ui/card";
 import { CityDetailReaction } from "@/components/sections/city-detail-reaction";
 
