@@ -13,7 +13,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
       {/* 배경 오버레이 (영상 placeholder) */}
-      <div className="absolute inset-0 bg-[url('/images/hero-poster.jpg')] bg-cover bg-center opacity-20" />
+      <div className="absolute inset-0 bg-slate-800" />
       <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/50" />
 
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">

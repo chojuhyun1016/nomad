@@ -1,96 +1,86 @@
 "use client";
 
-import { useState } from "react";
-import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
-import { Toggle } from "@/components/ui/toggle";
-import { sortOptions, filterTags } from "@/data/nav";
+import { FILTER_DEFINITIONS, type FilterDefinition } from "@/config/filter-config";
+import type { Filters } from "@/hooks/useCityFilter";
 
-export function FilterBar() {
-  const [sort, setSort] = useState("kNomadScore");
-  const [search, setSearch] = useState("");
-  const [activeTags, setActiveTags] = useState<string[]>([]);
-  const [budget, setBudget] = useState([50, 300]);
+interface FilterBarProps {
+  filters: Filters;
+  onFilterChange: (filters: Filters) => void;
+}
 
-  const toggleTag = (tag: string) => {
-    setActiveTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
-  };
+export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
+  function handleSelect(def: FilterDefinition, value: string) {
+    if (def.type === "single") {
+      onFilterChange({ ...filters, [def.key]: [value] });
+      return;
+    }
+
+    // multi select
+    if (value === "전체") {
+      onFilterChange({ ...filters, [def.key]: ["전체"] });
+      return;
+    }
+    const current = (filters[def.key] ?? []).filter((v) => v !== "전체");
+    const next = current.includes(value)
+      ? current.filter((v) => v !== value)
+      : [...current, value];
+    onFilterChange({
+      ...filters,
+      [def.key]: next.length === 0 ? ["전체"] : next,
+    });
+  }
 
   return (
-    <section className="sticky top-16 z-40 border-y bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
-        {/* 상단: 정렬 + 검색 + CTA */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Select value={sort} onValueChange={(v) => v && setSort(v)}>
-            <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="정렬 기준" />
-            </SelectTrigger>
-            <SelectContent>
-              {sortOptions.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="도시 검색 또는 필터..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9"
-            />
-          </div>
-
-          <Button size="sm" className="hidden sm:inline-flex shrink-0">
-            Korea Nomad 가입 →
-          </Button>
-        </div>
-
-        {/* 하단: 태그 + 예산 슬라이더 */}
-        <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <div className="flex flex-wrap gap-2">
-            {filterTags.map((tag) => (
-              <Toggle
-                key={tag.label}
-                size="sm"
-                pressed={activeTags.includes(tag.label)}
-                onPressedChange={() => toggleTag(tag.label)}
-                className="text-xs h-7 px-2.5"
-              >
-                {tag.emoji} {tag.label}
-              </Toggle>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3 sm:ml-auto min-w-0 sm:min-w-[240px]">
-            <span className="text-xs text-muted-foreground shrink-0">
-              💰 {budget[0]}만~{budget[1]}만
-            </span>
-            <Slider
-              value={budget}
-              onValueChange={(v) => setBudget(Array.isArray(v) ? [...v] : [v])}
-              min={50}
-              max={300}
-              step={10}
-              className="flex-1"
-            />
-          </div>
-        </div>
+    <div className="sticky top-16 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 space-y-3">
+        {FILTER_DEFINITIONS.map((def) => (
+          <FilterGroup
+            key={def.key}
+            label={def.label}
+            options={def.options}
+            selected={filters[def.key] ?? ["전체"]}
+            onSelect={(v) => handleSelect(def, v)}
+          />
+        ))}
       </div>
-    </section>
+    </div>
+  );
+}
+
+function FilterGroup({
+  label,
+  options,
+  selected,
+  onSelect,
+}: {
+  label: string;
+  options: readonly string[];
+  selected: string[];
+  onSelect: (value: string) => void;
+}) {
+  return (
+    <div className="flex items-center gap-2 flex-wrap">
+      <span className="text-sm font-medium text-muted-foreground w-16 shrink-0">
+        {label}
+      </span>
+      <div className="flex flex-wrap gap-1.5">
+        {options.map((option) => {
+          const isActive = selected.includes(option);
+          return (
+            <button
+              key={option}
+              onClick={() => onSelect(option)}
+              className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                isActive
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+              }`}
+            >
+              {option}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }

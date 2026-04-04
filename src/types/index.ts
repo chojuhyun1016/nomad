@@ -1,5 +1,9 @@
+export type Region = "수도권" | "경상도" | "전라도" | "강원도" | "제주도" | "충청도";
+export type Environment = "자연친화" | "도심선호" | "카페작업" | "코워킹 필수";
+export type Season = "봄" | "여름" | "가을" | "겨울";
+export type BudgetRange = "100만원 이하" | "100~200만원" | "200만원 이상";
+
 export interface City {
-  rank: number;
   cityName: string;
   cityNameEn: string;
   imageUrl: string;
@@ -10,46 +14,13 @@ export interface City {
   temperature: number;
   aqi: number;
   safetyScore: number;
-  likedPercent: number;
   ktxToSeoul: string;
-  tags: string[];
-}
-
-export interface MediaQuote {
-  quote: string;
-  source: string;
-  logoUrl: string;
-}
-
-export interface Meetup {
-  date: string;
-  city: string;
-  location: string;
-  attendees: number;
-  avatarUrls: string[];
-}
-
-export interface VisaCard {
-  icon: string;
-  title: string;
-  titleEn: string;
-  description: string;
-  linkText: string;
-}
-
-export interface SeasonalCity {
-  cityName: string;
-  cityNameEn: string;
-  aqi: number;
-  emoji: string;
-}
-
-export interface SeasonRecommendation {
-  season: string;
-  emoji: string;
-  headline: string;
-  description: string;
-  cities: SeasonalCity[];
+  region: Region;
+  environment: Environment[];
+  bestSeason: Season[];
+  budgetRange: BudgetRange;
+  likes: number;
+  dislikes: number;
 }
 
 export interface NavLink {
@@ -61,11 +32,3 @@ export interface FooterColumn {
   title: string;
   links: NavLink[];
 }
-
-export type SortOption = {
-  value: string;
-  label: string;
-};
-
-export type Currency = "KRW" | "USD";
-export type TempUnit = "C" | "F";
