@@ -12,6 +12,7 @@ import {
   Train,
   MapPin,
   DollarSign,
+  Star,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { CityDetailReaction } from "@/components/sections/city-detail-reaction";
@@ -38,6 +39,8 @@ export async function generateMetadata({
 }
 
 const stats = [
+  { key: "kNomadScore", label: "노마드 점수", icon: Star, unit: "점" },
+  { key: "monthlyCost", label: "월 생활비", icon: DollarSign, unit: "", format: (v: number) => `${Math.round(v / 10000)}만원` },
   { key: "internetSpeed", label: "인터넷", icon: Wifi, unit: "Mbps" },
   { key: "cafeScore", label: "카페 점수", icon: Coffee, unit: "점" },
   { key: "temperature", label: "평균 기온", icon: Thermometer, unit: "°C" },
@@ -109,12 +112,13 @@ export default async function CityPage({ params }: CityPageProps) {
         ))}
       </div>
 
-      {/* 상세 스탯 */}
+      {/* 상세 스탯 (8개) */}
       <Card className="p-6 mb-8">
         <h2 className="mb-4 text-lg font-semibold">상세 정보</h2>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-          {stats.map(({ key, label, icon: Icon, unit }) => {
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {stats.map(({ key, label, icon: Icon, unit, ...rest }) => {
             const value = city[key];
+            const formatted = "format" in rest ? (rest as { format: (v: number) => string }).format(value as number) : unit ? `${value} ${unit}` : `${value}`;
             return (
               <div key={key} className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
@@ -122,10 +126,7 @@ export default async function CityPage({ params }: CityPageProps) {
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">{label}</p>
-                  <p className="text-sm font-semibold">
-                    {value}
-                    {unit && ` ${unit}`}
-                  </p>
+                  <p className="text-sm font-semibold">{formatted}</p>
                 </div>
               </div>
             );
