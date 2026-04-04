@@ -63,14 +63,14 @@ function FilterGroup({
       <span className="text-sm font-medium text-muted-foreground w-16 shrink-0">
         {label}
       </span>
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex gap-1.5 flex-1">
         {options.map((option) => {
           const isActive = selected.includes(option);
           return (
             <button
               key={option}
               onClick={() => onSelect(option)}
-              className={`px-3 py-1 rounded-full text-sm transition-colors ${
+              className={`flex-1 text-center px-3 py-1 rounded-full text-sm transition-colors ${
                 isActive
                   ? "bg-primary text-primary-foreground"
                   : "bg-muted text-muted-foreground hover:bg-muted/80"
