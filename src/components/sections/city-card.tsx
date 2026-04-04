@@ -42,7 +42,7 @@ export function CityCard({ city }: CityCardProps) {
         </div>
 
         {/* 좋아요/싫어요 영역 */}
-        <div className="border-t px-4 py-3 flex items-center gap-4">
+        <div className="border-t px-4 py-3 flex items-center justify-between">
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -66,8 +66,8 @@ export function CityCard({ city }: CityCardProps) {
               reaction === "dislike" ? "text-red-500" : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <ThumbsDown className="h-4 w-4" />
             <span>{dislikes}</span>
+            <ThumbsDown className="h-4 w-4" />
           </button>
         </div>
       </Card>
