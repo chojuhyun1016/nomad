@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getCityBySlug, getAllCitySlugs } from "@/lib/cities";
 import {
+  ArrowLeft,
   Wifi,
   Coffee,
   Thermometer,
@@ -12,6 +14,7 @@ import {
   DollarSign,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { CityDetailReaction } from "@/components/sections/city-detail-reaction";
 
 interface CityPageProps {
   params: Promise<{ slug: string }>;
@@ -51,6 +54,15 @@ export default async function CityPage({ params }: CityPageProps) {
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-12">
+      {/* 뒤로가기 */}
+      <Link
+        href="/"
+        className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        도시 리스트
+      </Link>
+
       {/* 헤더 */}
       <div className="relative h-56 rounded-xl bg-gradient-to-br from-slate-600 to-slate-800 overflow-hidden mb-8">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-500/80 to-slate-700/80" />
@@ -98,7 +110,7 @@ export default async function CityPage({ params }: CityPageProps) {
       </div>
 
       {/* 상세 스탯 */}
-      <Card className="p-6">
+      <Card className="p-6 mb-8">
         <h2 className="mb-4 text-lg font-semibold">상세 정보</h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
           {stats.map(({ key, label, icon: Icon, unit }) => {
@@ -120,6 +132,9 @@ export default async function CityPage({ params }: CityPageProps) {
           })}
         </div>
       </Card>
+
+      {/* 좋아요/싫어요 */}
+      <CityDetailReaction likes={city.likes} dislikes={city.dislikes} />
     </main>
   );
 }

@@ -134,7 +134,7 @@ custom hook 분리, 데이터 기반 렌더링, 의존성 주입을 적용하여
 
 ## Phase 5: 도시 상세 페이지 라우트 + 데이터 조회
 
-- [ ] Phase 5 완료
+- [x] Phase 5 완료
 
 ### 오버뷰
 
@@ -142,24 +142,24 @@ custom hook 분리, 데이터 기반 렌더링, 의존성 주입을 적용하여
 
 ### 수정/개선
 
-- [ ] **`src/lib/cities.ts`** (신규) — 도시 조회 유틸
-  - [ ] `toSlug(cityNameEn: string): string` — 영문명을 소문자 slug로 변환
-  - [ ] `getCityBySlug(slug: string): City | undefined` — slug로 도시 조회
-  - [ ] `getAllCitySlugs(): string[]` — 정적 생성용 slug 목록
-- [ ] **`src/app/cities/[slug]/page.tsx`** (신규) — 동적 라우트 Server Component
-  - [ ] `generateStaticParams()`로 정적 생성
-  - [ ] slug로 도시 조회, 없으면 `notFound()` 호출
-  - [ ] metadata 동적 생성 (도시명 기반 title/description)
-  - [ ] 상세 UI는 Phase 6에서 구현, 이 단계에서는 도시명만 표시하는 최소 페이지
-- [ ] **`src/components/sections/city-card.tsx`** — 카드에 Link 추가
-  - [ ] `next/link`의 `Link` 컴포넌트로 카드 전체를 감싸기
-  - [ ] href: `/cities/${toSlug(city.cityNameEn)}`
-  - [ ] 좋아요/싫어요 버튼 클릭 시 Link 이벤트 전파 방지 (`e.stopPropagation()` 또는 버튼 영역 분리)
+- [x] **`src/lib/cities.ts`** (신규) — 도시 조회 유틸
+  - [x] `toSlug(cityNameEn: string): string` — 영문명을 소문자 slug로 변환
+  - [x] `getCityBySlug(slug: string): City | undefined` — slug로 도시 조회
+  - [x] `getAllCitySlugs(): string[]` — 정적 생성용 slug 목록
+- [x] **`src/app/cities/[slug]/page.tsx`** (신규) — 동적 라우트 Server Component
+  - [x] `generateStaticParams()`로 정적 생성
+  - [x] slug로 도시 조회, 없으면 `notFound()` 호출
+  - [x] metadata 동적 생성 (도시명 기반 title/description)
+  - [x] 상세 UI는 Phase 6에서 구현, 이 단계에서는 도시명만 표시하는 최소 페이지
+- [x] **`src/components/sections/city-card.tsx`** — 카드에 Link 추가
+  - [x] `next/link`의 `Link` 컴포넌트로 카드 전체를 감싸기
+  - [x] href: `/cities/${toSlug(city.cityNameEn)}`
+  - [x] 좋아요/싫어요 버튼 클릭 시 Link 이벤트 전파 방지 (`e.stopPropagation()` 또는 버튼 영역 분리)
 
 ### 검증/확인
 
-- [ ] `npm run build` 성공
-- [ ] `npm run lint` 통과
+- [x] `npm run build` 성공
+- [x] `npm run lint` 통과
 - [ ] 홈페이지에서 도시 카드 클릭 시 `/cities/seoul` 등으로 이동
 - [ ] 존재하지 않는 slug 접근 시 404 페이지 표시
 - [ ] 좋아요/싫어요 버튼 클릭 시 상세 페이지로 이동하지 않고 토글만 동작
@@ -168,7 +168,7 @@ custom hook 분리, 데이터 기반 렌더링, 의존성 주입을 적용하여
 
 ## Phase 6: 상세 페이지 UI 구현
 
-- [ ] Phase 6 완료
+- [x] Phase 6 완료
 
 ### 오버뷰
 
@@ -176,24 +176,24 @@ custom hook 분리, 데이터 기반 렌더링, 의존성 주입을 적용하여
 
 ### 전제조건
 
-- [ ] Phase 5 완료
+- [x] Phase 5 완료
 
 ### 수정/개선
 
-- [ ] **`src/app/cities/[slug]/page.tsx`** — 상세 페이지 UI 구현
-  - [ ] 히어로 영역: 도시명(한글/영문) + 그라데이션 배경 (카드와 동일한 스타일)
-  - [ ] 기본 정보 섹션 (Key-Value): 예산, 지역, 환경, 최고 계절
-  - [ ] 상세 메트릭 그리드: kNomadScore, 월비용(포맷팅), 인터넷속도(Mbps), 카페스코어, 기온(°C), AQI, 안전도, KTX 소요시간
-  - [ ] 뒤로가기 링크 (← 도시 리스트)
-- [ ] **`src/components/sections/city-detail-reaction.tsx`** (신규) — Client Component
-  - [ ] `useReaction` hook 재사용
-  - [ ] 좋아요/싫어요 버튼 (카드와 동일한 토글 로직)
-  - [ ] 상세 페이지에서는 버튼 크기를 좀 더 크게 표시
+- [x] **`src/app/cities/[slug]/page.tsx`** — 상세 페이지 UI 구현
+  - [x] 히어로 영역: 도시명(한글/영문) + 그라데이션 배경 (카드와 동일한 스타일)
+  - [x] 기본 정보 섹션 (Key-Value): 예산, 지역, 환경, 최고 계절
+  - [x] 상세 메트릭 그리드: kNomadScore, 월비용(포맷팅), 인터넷속도(Mbps), 카페스코어, 기온(°C), AQI, 안전도, KTX 소요시간
+  - [x] 뒤로가기 링크 (← 도시 리스트)
+- [x] **`src/components/sections/city-detail-reaction.tsx`** (신규) — Client Component
+  - [x] `useReaction` hook 재사용
+  - [x] 좋아요/싫어요 버튼 (카드와 동일한 토글 로직)
+  - [x] 상세 페이지에서는 버튼 크기를 좀 더 크게 표시
 
 ### 검증/확인
 
-- [ ] `npm run build` 성공
-- [ ] `npm run lint` 통과
+- [x] `npm run build` 성공
+- [x] `npm run lint` 통과
 - [ ] 상세 페이지에 City의 모든 필드가 표시
 - [ ] 좋아요/싫어요 토글 정상 동작
 - [ ] 뒤로가기 링크로 홈페이지 이동
