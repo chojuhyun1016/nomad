@@ -375,3 +375,44 @@ Supabase SQL Editor에서 `supabase/migrations/004_update_cities_rpc.sql` 실행
 ### 검증
 
 - [x] `npm run build` + `npm run lint` 통과
+
+---
+
+## Phase 12: Hero 섹션 정리
+
+- [x] Phase 12 완료
+
+### 오버뷰
+
+Hero에서 소개 영상 모달과 소셜 가입 폼을 제거하고, 간결한 노마드 소개만 남긴다.
+
+### 수정/개선
+
+- [x] `src/components/sections/hero.tsx` — 중앙 정렬 간결한 소개로 축소
+- [x] `src/components/sections/hero-signup-form.tsx` — 삭제
+- [x] `src/components/sections/hero-video-modal.tsx` — 삭제
+- [x] `src/lib/constants.ts` — 삭제 (상수를 hero.tsx 내부로 이동)
+
+### 검증
+
+- [x] `npm run build` + `npm run lint` 통과
+
+---
+
+## Phase 13: 필터 바 드롭다운 전환
+
+- [x] Phase 13 완료
+
+### 오버뷰
+
+필터 바를 4행 버튼 그룹에서 한 줄 드롭다운(Select) 4개로 변경. 환경 필터를 단일 선택으로 변경.
+
+### 수정/개선
+
+- [x] `src/config/filter-config.ts` — type 필드 제거, match 시그니처 string으로 단순화
+- [x] `src/components/sections/filter-bar.tsx` — shadcn/ui Select 드롭다운 4개로 변경
+- [x] `src/hooks/useCityFilter.ts` — Filters 타입 string[]에서 string으로 단순화
+
+### 검증
+
+- [x] `npm run build` + `npm run lint` 통과
