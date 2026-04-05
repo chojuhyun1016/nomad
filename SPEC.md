@@ -247,3 +247,85 @@ custom hook 분리, 데이터 기반 렌더링, 의존성 주입을 적용하여
 - [x] 각 필터 행의 버튼들이 남은 공간을 균등하게 차지
 - [x] 모바일/데스크톱 반응형 정상 표시
 - [x] 필터 클릭 동작 정상
+
+---
+
+## Phase 9: Supabase 테이블 생성 + 시드 데이터
+
+- [ ] Phase 9 완료
+
+### 오버뷰
+
+cities 테이블과 city_reactions 테이블을 Supabase에 생성하고, Mock 데이터를 시드로 삽입한다. RLS 정책을 설정한다.
+
+### 수정/개선
+
+- [ ] Supabase SQL Editor에서 `cities`, `city_reactions` 테이블 생성
+- [ ] RLS 정책 설정 (cities: 누구나 읽기 / city_reactions: 인증 사용자만 자기 반응 CRUD)
+- [ ] 12개 도시 시드 데이터 INSERT
+- [ ] **`src/types/index.ts`** — City 타입에 `id: string` 추가
+
+### 검증/확인
+
+- [ ] Supabase Dashboard에서 cities 12행, city_reactions 테이블 확인
+- [ ] RLS 정책 동작 확인
+- [ ] `npm run build` 성공
+
+---
+
+## Phase 10: 도시 데이터 Supabase 조회로 전환
+
+- [ ] Phase 10 완료
+
+### 전제조건
+
+- [ ] Phase 9 완료
+
+### 오버뷰
+
+Mock import를 Supabase 서버 쿼리로 교체한다. DIP 패턴(props 주입)을 유지한다.
+
+### 수정/개선
+
+- [ ] **`src/lib/cities.ts`** — Supabase 서버 쿼리로 변경 (`getCities`, `getCityBySlug`, `getAllCitySlugs`)
+- [ ] **`src/app/page.tsx`** — `getCities()` 호출 후 CitySection에 전달
+- [ ] **`src/app/cities/[slug]/page.tsx`** — `getCityBySlug(slug)` Supabase 쿼리로 변경
+- [ ] **`src/data/cities.ts`** — 프로덕션 코드에서 import 제거 (시드 용도로 유지)
+
+### 검증/확인
+
+- [ ] `npm run build` 성공
+- [ ] `npm run lint` 통과
+- [ ] 홈페이지에서 12개 도시가 Supabase에서 조회되어 표시
+- [ ] 필터링 + 상세 페이지 정상 동작
+
+---
+
+## Phase 11: 좋아요/싫어요 Supabase 저장
+
+- [ ] Phase 11 완료
+
+### 전제조건
+
+- [ ] Phase 10 완료
+
+### 오버뷰
+
+좋아요/싫어요 클릭 시 city_reactions 테이블에 저장하고 카운트를 업데이트한다. 비인증 사용자는 로그인 유도.
+
+### 수정/개선
+
+- [ ] **`src/app/cities/actions.ts`** (신규) — `toggleReaction` Server Action
+- [ ] **`src/hooks/useReaction.ts`** — 낙관적 업데이트 + Server Action 호출
+- [ ] **`src/components/sections/city-card.tsx`** — cityId, 사용자 반응 상태 전달
+- [ ] **`src/components/sections/city-detail-reaction.tsx`** — 동일
+- [ ] **`src/app/page.tsx`** — 사용자 반응 상태 함께 조회
+- [ ] **`src/app/cities/[slug]/page.tsx`** — 동일
+
+### 검증/확인
+
+- [ ] `npm run build` 성공
+- [ ] `npm run lint` 통과
+- [ ] 로그인 상태에서 좋아요 → DB 저장, 새로고침 후 유지
+- [ ] 비인증 클릭 → 로그인 페이지 이동
+- [ ] 홈 ↔ 상세 페이지 간 좋아요 상태 동기화
