@@ -48,6 +48,7 @@ tsconfig.tsbuildinfo
 e2e/test-results/
 playwright-report/
 blob-report/
+.playwright-mcp/
 
 # Logs
 *.log
