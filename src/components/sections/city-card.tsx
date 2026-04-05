@@ -5,15 +5,22 @@ import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { City } from "@/types";
 import { useReaction } from "@/hooks/useReaction";
-import { toSlug } from "@/lib/cities";
+import { toSlug } from "@/lib/slug";
+import type { ReactionType } from "@/app/cities/actions";
 
 interface CityCardProps {
   city: City;
+  userReaction?: ReactionType;
 }
 
-export function CityCard({ city }: CityCardProps) {
+export function CityCard({ city, userReaction }: CityCardProps) {
   const { reaction, likes, dislikes, handleLike, handleDislike } =
-    useReaction(city.likes, city.dislikes);
+    useReaction({
+      cityId: city.id,
+      initialLikes: city.likes,
+      initialDislikes: city.dislikes,
+      initialReaction: userReaction,
+    });
 
   return (
     <Link href={`/cities/${toSlug(city.cityNameEn)}`} className="block">

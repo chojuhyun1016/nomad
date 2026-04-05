@@ -3,9 +3,10 @@ import { City } from "@/types";
 
 interface CityGridProps {
   cities: City[];
+  userReactions?: Record<string, "like" | "dislike">;
 }
 
-export function CityGrid({ cities }: CityGridProps) {
+export function CityGrid({ cities, userReactions }: CityGridProps) {
   return (
     <section id="cities" className="py-8 sm:py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -17,7 +18,11 @@ export function CityGrid({ cities }: CityGridProps) {
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {cities.map((city) => (
-              <CityCard key={city.cityName} city={city} />
+              <CityCard
+                key={city.id}
+                city={city}
+                userReaction={userReactions?.[city.id]}
+              />
             ))}
           </div>
         )}

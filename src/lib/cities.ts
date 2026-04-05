@@ -71,6 +71,48 @@ export async function getCityBySlug(slug: string): Promise<City | undefined> {
   return mapCityRow(data as CityRow);
 }
 
+export async function getUserReactions(): Promise<Record<string, "like" | "dislike">> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return {};
+
+  const { data, error } = await supabase
+    .from("city_reactions")
+    .select("city_id, reaction_type")
+    .eq("user_id", user.id);
+
+  if (error || !data) return {};
+
+  const map: Record<string, "like" | "dislike"> = {};
+  for (const row of data) {
+    map[row.city_id] = row.reaction_type as "like" | "dislike";
+  }
+  return map;
+}
+
+export async function getUserReactionForCity(
+  cityId: string
+): Promise<"like" | "dislike" | null> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return null;
+
+  const { data } = await supabase
+    .from("city_reactions")
+    .select("reaction_type")
+    .eq("user_id", user.id)
+    .eq("city_id", cityId)
+    .single();
+
+  return (data?.reaction_type as "like" | "dislike") ?? null;
+}
+
 export async function getAllCitySlugs(): Promise<string[]> {
   const supabase = await createClient();
   const { data, error } = await supabase.from("cities").select("slug");

@@ -7,15 +7,16 @@ import { CityGrid } from "./city-grid";
 
 interface CitySectionProps {
   cities: City[];
+  userReactions?: Record<string, "like" | "dislike">;
 }
 
-export function CitySection({ cities }: CitySectionProps) {
+export function CitySection({ cities, userReactions }: CitySectionProps) {
   const { filters, setFilters, filteredCities } = useCityFilter(cities);
 
   return (
     <>
       <FilterBar filters={filters} onFilterChange={setFilters} />
-      <CityGrid cities={filteredCities} />
+      <CityGrid cities={filteredCities} userReactions={userReactions} />
     </>
   );
 }

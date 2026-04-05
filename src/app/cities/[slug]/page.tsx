@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getCityBySlug, getAllCitySlugs } from "@/lib/cities";
+import { getCityBySlug, getUserReactionForCity } from "@/lib/cities";
 import {
   ArrowLeft,
   Wifi,
@@ -19,11 +19,6 @@ import { CityDetailReaction } from "@/components/sections/city-detail-reaction";
 
 interface CityPageProps {
   params: Promise<{ slug: string }>;
-}
-
-export async function generateStaticParams() {
-  const slugs = await getAllCitySlugs();
-  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -55,6 +50,8 @@ export default async function CityPage({ params }: CityPageProps) {
   const city = await getCityBySlug(slug);
 
   if (!city) notFound();
+
+  const userReaction = await getUserReactionForCity(city.id);
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-12">
@@ -136,7 +133,7 @@ export default async function CityPage({ params }: CityPageProps) {
       </Card>
 
       {/* 좋아요/싫어요 */}
-      <CityDetailReaction likes={city.likes} dislikes={city.dislikes} />
+      <CityDetailReaction cityId={city.id} likes={city.likes} dislikes={city.dislikes} userReaction={userReaction} />
     </main>
   );
 }

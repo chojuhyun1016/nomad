@@ -2,18 +2,28 @@
 
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { useReaction } from "@/hooks/useReaction";
+import type { ReactionType } from "@/app/cities/actions";
 
 interface CityDetailReactionProps {
+  cityId: string;
   likes: number;
   dislikes: number;
+  userReaction?: ReactionType;
 }
 
 export function CityDetailReaction({
+  cityId,
   likes: initialLikes,
   dislikes: initialDislikes,
+  userReaction,
 }: CityDetailReactionProps) {
   const { reaction, likes, dislikes, handleLike, handleDislike } =
-    useReaction(initialLikes, initialDislikes);
+    useReaction({
+      cityId,
+      initialLikes,
+      initialDislikes,
+      initialReaction: userReaction,
+    });
 
   return (
     <section className="flex items-center gap-6">
