@@ -89,6 +89,52 @@ src/
 - **필터 설정**: `src/config/filter-config.ts`의 `FILTER_DEFINITIONS`로 관리 (OCP — 새 필터 추가 시 설정만 추가)
 - **반응형**: Tailwind 기본 브레이크포인트 (`md:768px`, `lg:1024px`, `xl:1280px`)
 
+## 테스트
+
+### 유닛 테스트 (Vitest)
+
+```bash
+npm test              # 전체 실행
+npm run test:watch    # 감시 모드
+npm run test:coverage # 커버리지 리포트
+```
+
+| 디렉토리 | 대상 | 파일 수 |
+|---|---|---|
+| `__tests__/unit/lib/` | 순수 함수 (slug, validation, get-season, utils) | 4 |
+| `__tests__/unit/config/` | 필터 match 함수 | 1 |
+| `__tests__/hooks/` | Custom hooks (useCityFilter, useReaction, useLogout) | 3 |
+| `__tests__/components/` | 컴포넌트 (CityGrid, FilterBar, CitySection) | 3 |
+| `__tests__/integration/` | Server Actions (toggleReaction, login, register) | 3 |
+
+### E2E 테스트 (Playwright)
+
+```bash
+npm run test:e2e      # 헤드리스 실행
+npm run test:e2e:ui   # UI 모드 (브라우저에서 디버깅)
+```
+
+```
+e2e/
+├── fixtures/              # 테스트 데이터 (계정 정보, 도시 slug)
+│   └── test-user.ts
+├── pages/                 # Page Object Model (POM)
+│   ├── home.page.ts       # 홈페이지 (Hero, FilterBar, CityGrid)
+│   ├── city-detail.page.ts # 도시 상세 페이지
+│   ├── login.page.ts      # 로그인 페이지
+│   ├── register.page.ts   # 회원가입 페이지
+│   └── header.page.ts     # 헤더 네비게이션
+└── tests/                 # 테스트 시나리오
+    ├── navigation/        # 페이지 이동, 라우팅
+    ├── filter/            # 필터 드롭다운 인터랙션
+    ├── auth/              # 회원가입 → 로그인 → 로그아웃
+    └── reaction/          # 좋아요/싫어요 (인증/비인증)
+```
+
+- **POM 패턴**: 각 페이지의 locator와 action을 `pages/` 디렉토리에 캡슐화
+- **fixtures**: 테스트 간 공유하는 데이터 (계정 정보, 도시 slug 등)
+- **webServer**: `playwright.config.ts`에서 `npm run dev` 자동 실행 (baseURL: `http://localhost:3000`)
+
 ## 참고
 
 - 모든 안내와 응답은 한국어로 진행합니다.

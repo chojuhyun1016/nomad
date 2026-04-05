@@ -44,6 +44,11 @@ out/
 # TypeScript build cache
 tsconfig.tsbuildinfo
 
+# Playwright
+e2e/test-results/
+playwright-report/
+blob-report/
+
 # Logs
 *.log
 
