@@ -329,3 +329,25 @@ Mock import를 Supabase 서버 쿼리로 교체한다. DIP 패턴(props 주입)�
 - [ ] 로그인 상태에서 좋아요 → DB 저장, 새로고침 후 유지
 - [ ] 비인증 클릭 → 로그인 페이지 이동
 - [ ] 홈 ↔ 상세 페이지 간 좋아요 상태 동기화
+
+---
+
+## Bugfix: 좋아요 카운트 초기화 버그 수정
+
+- [x] 수정 완료
+
+### 원인
+
+`toggleReaction` Server Action에서 `city_reactions` 테이블의 행 수를 COUNT하여 `cities.likes/dislikes`에 덮어쓰는 방식이었음. 시드 데이터(likes=920)는 `city_reactions`에 실제 행이 없으므로 COUNT=0 → 920이 0으로 초기화됨.
+
+### 수정 내용
+
+- [x] **`src/app/cities/actions.ts`** — COUNT 방식 → 증감(delta) 방식으로 변경
+  - [x] 현재 `cities.likes/dislikes` 값을 먼저 조회
+  - [x] 반응 유형에 따라 `likeDelta`, `dislikeDelta` 계산 (+1/-1)
+  - [x] `Math.max(0, 현재값 + delta)`로 업데이트 (음수 방지)
+
+### 검증/확인
+
+- [x] `npm run build` 성공
+- [x] `npm run lint` 통과

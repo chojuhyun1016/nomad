@@ -33,15 +33,34 @@ export async function toggleReaction(
     .eq("city_id", cityId)
     .single();
 
+  // 현재 cities 카운트 조회
+  const { data: city } = await supabase
+    .from("cities")
+    .select("likes, dislikes")
+    .eq("id", cityId)
+    .single();
+
+  let likeDelta = 0;
+  let dislikeDelta = 0;
+
   if (existing?.reaction_type === reactionType) {
     // 같은 반응 다시 클릭 → 삭제 (토글 off)
     await supabase.from("city_reactions").delete().eq("id", existing.id);
+    if (reactionType === "like") likeDelta = -1;
+    else dislikeDelta = -1;
   } else if (existing) {
     // 다른 반응으로 변경
     await supabase
       .from("city_reactions")
       .update({ reaction_type: reactionType })
       .eq("id", existing.id);
+    if (existing.reaction_type === "like") {
+      likeDelta = -1;
+      dislikeDelta = 1;
+    } else {
+      likeDelta = 1;
+      dislikeDelta = -1;
+    }
   } else {
     // 새 반응 생성
     await supabase.from("city_reactions").insert({
@@ -49,26 +68,14 @@ export async function toggleReaction(
       city_id: cityId,
       reaction_type: reactionType,
     });
+    if (reactionType === "like") likeDelta = 1;
+    else dislikeDelta = 1;
   }
 
-  // 카운트 재계산
-  const [{ count: likeCount }, { count: dislikeCount }] = await Promise.all([
-    supabase
-      .from("city_reactions")
-      .select("*", { count: "exact", head: true })
-      .eq("city_id", cityId)
-      .eq("reaction_type", "like"),
-    supabase
-      .from("city_reactions")
-      .select("*", { count: "exact", head: true })
-      .eq("city_id", cityId)
-      .eq("reaction_type", "dislike"),
-  ]);
+  const newLikes = Math.max(0, (city?.likes ?? 0) + likeDelta);
+  const newDislikes = Math.max(0, (city?.dislikes ?? 0) + dislikeDelta);
 
-  const newLikes = likeCount ?? 0;
-  const newDislikes = dislikeCount ?? 0;
-
-  // cities 테이블 카운트 업데이트
+  // cities 테이블 카운트 증감 업데이트
   await supabase
     .from("cities")
     .update({ likes: newLikes, dislikes: newDislikes })

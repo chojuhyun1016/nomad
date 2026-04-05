@@ -9,7 +9,16 @@
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
    ```
 
-## 마이그레이션 실행 순서
+## 빠른 실행 (올인원)
+
+1. Supabase Dashboard 접속: https://supabase.com/dashboard
+2. 좌측 메뉴 **SQL Editor** 클릭
+3. **New query** 클릭
+4. `supabase/migrations/000_all_in_one.sql` 파일 내용을 **전체 복사** → 붙여넣기
+5. **Run** 클릭
+6. 마지막 줄에 `cities: 12` 가 출력되면 성공
+
+## 개별 실행 (단계별)
 
 Supabase Dashboard > SQL Editor에서 아래 파일들을 **순서대로** 실행하세요.
 
