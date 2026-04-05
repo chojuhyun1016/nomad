@@ -1,14 +1,17 @@
 import { Hero } from "@/components/sections/hero";
 import { CitySection } from "@/components/sections/city-section";
-import { getCities } from "@/lib/cities";
+import { getCities, getUserReactions } from "@/lib/cities";
 
 export default async function HomePage() {
-  const cities = await getCities();
+  const [cities, userReactions] = await Promise.all([
+    getCities(),
+    getUserReactions(),
+  ]);
 
   return (
     <>
       <Hero />
-      <CitySection cities={cities} />
+      <CitySection cities={cities} userReactions={userReactions} />
     </>
   );
 }
