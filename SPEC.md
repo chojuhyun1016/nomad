@@ -351,3 +351,27 @@ Mock import를 Supabase 서버 쿼리로 교체한다. DIP 패턴(props 주입)�
 
 - [x] `npm run build` 성공
 - [x] `npm run lint` 통과
+
+---
+
+## Bugfix: 좋아요 카운트 RLS 업데이트 실패 수정
+
+- [x] 수정 완료
+
+### 원인
+
+cities 테이블 RLS에 SELECT 정책만 존재하고 UPDATE 정책이 없음. `supabase.from("cities").update()`가 RLS에 의해 무시되어 DB 값이 변경되지 않음 → 매 클릭마다 원래 DB값 ± 1로 왔다갔다.
+
+### 수정 내용
+
+- [x] **`supabase/migrations/004_update_cities_rpc.sql`** (신규) — `update_city_reaction_counts` RPC 함수 (SECURITY DEFINER, RLS 우회)
+- [x] **`supabase/migrations/000_all_in_one.sql`** — RPC 함수 추가
+- [x] **`src/app/cities/actions.ts`** — 직접 UPDATE → `supabase.rpc()` 호출로 변경
+
+### 적용 방법
+
+Supabase SQL Editor에서 `supabase/migrations/004_update_cities_rpc.sql` 실행 필요.
+
+### 검증
+
+- [x] `npm run build` + `npm run lint` 통과

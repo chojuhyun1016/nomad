@@ -33,13 +33,6 @@ export async function toggleReaction(
     .eq("city_id", cityId)
     .single();
 
-  // 현재 cities 카운트 조회
-  const { data: city } = await supabase
-    .from("cities")
-    .select("likes, dislikes")
-    .eq("id", cityId)
-    .single();
-
   let likeDelta = 0;
   let dislikeDelta = 0;
 
@@ -72,14 +65,15 @@ export async function toggleReaction(
     else dislikeDelta = 1;
   }
 
-  const newLikes = Math.max(0, (city?.likes ?? 0) + likeDelta);
-  const newDislikes = Math.max(0, (city?.dislikes ?? 0) + dislikeDelta);
+  // RPC로 카운트 업데이트 (SECURITY DEFINER — RLS 우회)
+  const { data: counts } = await supabase.rpc("update_city_reaction_counts", {
+    p_city_id: cityId,
+    p_like_delta: likeDelta,
+    p_dislike_delta: dislikeDelta,
+  });
 
-  // cities 테이블 카운트 증감 업데이트
-  await supabase
-    .from("cities")
-    .update({ likes: newLikes, dislikes: newDislikes })
-    .eq("id", cityId);
+  const newLikes = counts?.[0]?.new_likes ?? 0;
+  const newDislikes = counts?.[0]?.new_dislikes ?? 0;
 
   // 현재 사용자 반응 다시 확인
   const { data: updated } = await supabase
