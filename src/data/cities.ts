@@ -1,6 +1,7 @@
-import { City } from "@/types";
+import type { City } from "@/types";
 
-export const cities: City[] = [
+/** 시드 데이터 전용 — 프로덕션 코드에서 import 금지 (Supabase 조회 사용) */
+export const cities: Omit<City, "id">[] = [
   {
     cityName: "제주",
     cityNameEn: "Jeju",

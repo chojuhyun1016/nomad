@@ -22,14 +22,15 @@ interface CityPageProps {
 }
 
 export async function generateStaticParams() {
-  return getAllCitySlugs().map((slug) => ({ slug }));
+  const slugs = await getAllCitySlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: CityPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const city = getCityBySlug(slug);
+  const city = await getCityBySlug(slug);
   if (!city) return {};
 
   return {
@@ -51,7 +52,7 @@ const stats = [
 
 export default async function CityPage({ params }: CityPageProps) {
   const { slug } = await params;
-  const city = getCityBySlug(slug);
+  const city = await getCityBySlug(slug);
 
   if (!city) notFound();
 

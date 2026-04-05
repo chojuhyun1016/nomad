@@ -1,8 +1,10 @@
 import { Hero } from "@/components/sections/hero";
 import { CitySection } from "@/components/sections/city-section";
-import { cities } from "@/data/cities";
+import { getCities } from "@/lib/cities";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const cities = await getCities();
+
   return (
     <>
       <Hero />

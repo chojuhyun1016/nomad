@@ -4,7 +4,7 @@ export type Season = "봄" | "여름" | "가을" | "겨울";
 export type BudgetRange = "100만원 이하" | "100~200만원" | "200만원 이상";
 
 export interface City {
-  id?: string;
+  id: string;
   cityName: string;
   cityNameEn: string;
   imageUrl: string;
