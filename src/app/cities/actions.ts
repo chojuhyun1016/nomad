@@ -66,14 +66,20 @@ export async function toggleReaction(
   }
 
   // RPC로 카운트 업데이트 (SECURITY DEFINER — RLS 우회)
-  const { data: counts } = await supabase.rpc("update_city_reaction_counts", {
+  const { data: counts, error: rpcError } = await supabase.rpc("update_city_reaction_counts", {
     p_city_id: cityId,
     p_like_delta: likeDelta,
     p_dislike_delta: dislikeDelta,
   });
 
-  const newLikes = counts?.[0]?.new_likes ?? 0;
-  const newDislikes = counts?.[0]?.new_dislikes ?? 0;
+  if (rpcError) {
+    console.error("[toggleReaction] RPC error:", rpcError);
+  }
+
+  // RPC는 배열 또는 단일 객체를 반환할 수 있음
+  const row = Array.isArray(counts) ? counts[0] : counts;
+  const newLikes = row?.new_likes ?? 0;
+  const newDislikes = row?.new_dislikes ?? 0;
 
   // 현재 사용자 반응 다시 확인
   const { data: updated } = await supabase

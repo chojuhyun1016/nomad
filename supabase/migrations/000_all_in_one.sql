@@ -109,16 +109,13 @@ language plpgsql
 security definer
 as $$
 begin
-  update cities
-  set
-    likes = greatest(0, likes + p_like_delta),
-    dislikes = greatest(0, dislikes + p_dislike_delta)
-  where id = p_city_id;
-
   return query
-    select likes, dislikes
-    from cities
-    where id = p_city_id;
+    update cities
+    set
+      likes = greatest(0, likes + p_like_delta),
+      dislikes = greatest(0, dislikes + p_dislike_delta)
+    where id = p_city_id
+    returning likes, dislikes;
 end;
 $$;
 
