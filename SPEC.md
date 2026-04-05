@@ -252,7 +252,7 @@ custom hook 분리, 데이터 기반 렌더링, 의존성 주입을 적용하여
 
 ## Phase 9: Supabase 테이블 생성 + 시드 데이터
 
-- [ ] Phase 9 완료
+- [x] Phase 9 완료
 
 ### 오버뷰
 
@@ -260,16 +260,16 @@ cities 테이블과 city_reactions 테이블을 Supabase에 생성하고, Mock �
 
 ### 수정/개선
 
-- [ ] Supabase SQL Editor에서 `cities`, `city_reactions` 테이블 생성
-- [ ] RLS 정책 설정 (cities: 누구나 읽기 / city_reactions: 인증 사용자만 자기 반응 CRUD)
-- [ ] 12개 도시 시드 데이터 INSERT
-- [ ] **`src/types/index.ts`** — City 타입에 `id: string` 추가
+- [x] Supabase SQL Editor에서 `cities`, `city_reactions` 테이블 생성
+- [x] RLS 정책 설정 (cities: 누구나 읽기 / city_reactions: 인증 사용자만 자기 반응 CRUD)
+- [x] 12개 도시 시드 데이터 INSERT
+- [x] **`src/types/index.ts`** — City 타입에 `id: string` 추가
 
 ### 검증/확인
 
-- [ ] Supabase Dashboard에서 cities 12행, city_reactions 테이블 확인
-- [ ] RLS 정책 동작 확인
-- [ ] `npm run build` 성공
+- [x] Supabase Dashboard에서 cities 12행, city_reactions 테이블 확인
+- [x] RLS 정책 동작 확인
+- [x] `npm run build` 성공
 
 ---
 
